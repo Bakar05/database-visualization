@@ -148,7 +148,7 @@ GROUP BY c.City
 ORDER BY TotalSales DESC;
 
 -- VIEW 3: Sales by Product
-CREATE VIEW v_sales_by_product AS
+CREATE VIEW sales_by_product AS
 SELECT
     p.ProductName,
     SUM(oi.QuantityOrdered) AS TotalQuantity,
@@ -159,15 +159,16 @@ GROUP BY p.ProductName
 ORDER BY TotalSales DESC;
 
 -- VIEW 4: Sales by Hour of Day
-CREATE VIEW v_sales_by_hour AS
+CREATE VIEW sales_by_hour AS
 SELECT
     o.time AS OrderTime,
+    o.OrderDate AS OrderDate,
     SUM(oi.Sales) AS TotalSales,
     COUNT(DISTINCT o.OrderID) AS TotalOrders
 FROM order_items oi
 JOIN orders o ON oi.OrderID = o.OrderID
-GROUP BY o.time
-ORDER BY o.time ASC;
+GROUP BY o.OrderDate, o.time
+ORDER BY o.OrderDate, o.time;
 
 -- VIEW 5: Sales by State
 CREATE VIEW sales_by_state AS
@@ -191,4 +192,5 @@ FROM order_items oi
 JOIN orders o ON oi.OrderID = o.OrderID
 GROUP BY o.OrderDate
 ORDER BY o.OrderDate ASC;
+
 
