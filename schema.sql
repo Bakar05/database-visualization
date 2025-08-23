@@ -109,7 +109,8 @@ ALTER TABLE orders ADD COLUMN time INTEGER;
 UPDATE orders SET time = SUBSTR(OrderDate, -8);
 UPDATE orders SET OrderDate = SUBSTR(OrderDate, 1, 10);
 
----DROPPING TABLE OF month because it serve's no purpose as the data is of january
+---DROPPING TABLE OF month because it serve's no purpose as the data is of january, February, April, October, December while now i believe it was not a good idea but it worked
+
 ALTER TABLE orders DROP COLUMN month;
 -------------------------------------------------------------------------------------
 
@@ -158,19 +159,7 @@ JOIN products p ON oi.ProductID = p.ProductID
 GROUP BY p.ProductName
 ORDER BY TotalSales DESC;
 
--- VIEW 4: Sales by Hour of Day
-CREATE VIEW sales_by_hour AS
-SELECT
-    o.time AS OrderTime,
-    o.OrderDate AS OrderDate,
-    SUM(oi.Sales) AS TotalSales,
-    COUNT(DISTINCT o.OrderID) AS TotalOrders
-FROM order_items oi
-JOIN orders o ON oi.OrderID = o.OrderID
-GROUP BY o.OrderDate, o.time
-ORDER BY o.OrderDate, o.time;
-
--- VIEW 5: Sales by State
+-- VIEW 4: Sales by State
 CREATE VIEW sales_by_state AS
 SELECT
     c.State,
@@ -182,15 +171,37 @@ JOIN customers c ON oc.CustomerID = c.CustomerID
 GROUP BY c.State
 ORDER BY TotalSales DESC;
 
--- VIEW 6: Daily Sales Summary
-CREATE VIEW sales_by_day AS
-SELECT
-    o.OrderDate,
-    ROUND(SUM(oi.Sales),2) AS TotalSales,
+-- VIEW 5: monthly Sales Summary
+CREATE VIEW sales_by_month AS
+SELECT 
+    strftime('%Y', o.OrderDate) AS Year,
+    CASE 
+        WHEN strftime('%m', o.OrderDate) = '01' THEN 'January'
+        WHEN strftime('%m', o.OrderDate) = '02' THEN 'February'
+        WHEN strftime('%m', o.OrderDate) = '03' THEN 'March'
+        WHEN strftime('%m', o.OrderDate) = '04' THEN 'April'
+        WHEN strftime('%m', o.OrderDate) = '05' THEN 'May'
+        WHEN strftime('%m', o.OrderDate) = '06' THEN 'June'
+        WHEN strftime('%m', o.OrderDate) = '07' THEN 'July'
+        WHEN strftime('%m', o.OrderDate) = '08' THEN 'August'
+        WHEN strftime('%m', o.OrderDate) = '09' THEN 'September'
+        WHEN strftime('%m', o.OrderDate) = '10' THEN 'October'
+        WHEN strftime('%m', o.OrderDate) = '11' THEN 'November'
+        WHEN strftime('%m', o.OrderDate) = '12' THEN 'December'
+    END AS Month,
+    ROUND(SUM(oi.Sales), 2) AS TotalSales,
     COUNT(DISTINCT o.OrderID) AS TotalOrders
-FROM order_items oi
-JOIN orders o ON oi.OrderID = o.OrderID
-GROUP BY o.OrderDate
-ORDER BY o.OrderDate ASC;
+FROM 
+    order_items oi
+JOIN 
+    orders o ON oi.OrderID = o.OrderID
+GROUP BY 
+    strftime('%Y', o.OrderDate),
+    strftime('%m', o.OrderDate)
+ORDER BY 
+    Year ASC,
+    strftime('%m', o.OrderDate) ASC;
+
+
 
 
