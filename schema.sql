@@ -202,6 +202,22 @@ ORDER BY
     Year ASC,
     strftime('%m', o.OrderDate) ASC;
 
+-- VIEW 5: sales in december
+CREATE VIEW sales_by_day_december AS
+SELECT 
+    o.OrderDate AS OrderDate, 
+    SUM(oi.Sales) AS TotalSales, 
+    COUNT(DISTINCT o.OrderID) AS TotalOrders
+FROM 
+    order_items oi
+JOIN 
+    orders o ON oi.OrderID = o.OrderID
+WHERE 
+    MONTH(o.OrderDate) = 12
+GROUP BY 
+    o.OrderDate
+ORDER BY 
+    o.OrderDate;
 
 
 
