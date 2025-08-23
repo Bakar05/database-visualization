@@ -9,11 +9,11 @@ def sales_dashboard():
     conn = sqlite3.connect("sales.db")
 
     # Load views
-    df_city = pd.read_sql_query("SELECT * FROM sales_by_city;", conn)
-    df_month = pd.read_sql_query("SELECT * FROM sales_by_month;", conn)
-    df_state = pd.read_sql_query("SELECT * FROM sales_by_state;", conn)
-    df_product = pd.read_sql_query("SELECT * FROM sales_by_product;", conn)
-    df_december = pd.read_sql_query("SELECT * FROM sales_in_december;", conn)
+    df_city = pd.read_sql_query("SELECT * FROM analysis_by_city;", conn)
+    df_month = pd.read_sql_query("SELECT * FROM analysis_by_month;", conn)
+    df_state = pd.read_sql_query("SELECT * FROM analysis_by_state;", conn)
+    df_product = pd.read_sql_query("SELECT * FROM analysis_by_product;", conn)
+    df_december = pd.read_sql_query("SELECT * FROM analysis_of_december;", conn)
 
     conn.close()
     sns.set_style("whitegrid")
@@ -118,11 +118,11 @@ def orders_dashboard():
     conn = sqlite3.connect("sales.db")
 
     # Load views
-    df_city = pd.read_sql_query("SELECT * FROM sales_by_city;", conn)
-    df_month = pd.read_sql_query("SELECT * FROM sales_by_month;", conn)
-    df_state = pd.read_sql_query("SELECT * FROM sales_by_state;", conn)
-    df_product = pd.read_sql_query("SELECT * FROM sales_by_product;", conn)
-    df_december = pd.read_sql_query("SELECT * FROM sales_in_december;", conn)
+    df_city = pd.read_sql_query("SELECT * FROM analysis_by_city;", conn)
+    df_month = pd.read_sql_query("SELECT * FROM analysis_by_month;", conn)
+    df_state = pd.read_sql_query("SELECT * FROM analysis_by_state;", conn)
+    df_product = pd.read_sql_query("SELECT * FROM analysis_by_product;", conn)
+    df_december = pd.read_sql_query("SELECT * FROM analysis_of_december;", conn)
 
     conn.close()
     sns.set_style("whitegrid")
@@ -255,23 +255,23 @@ def main():
             choice = int(input("Enter your choice (2-7): "))
 
             if choice == 1:
-                df = pd.read_sql_query("SELECT * FROM sales_by_city;", conn)
+                df = pd.read_sql_query("SELECT * FROM analysis_by_city;", conn)
                 Total_Orders_by_city(df)
 
             elif choice == 2:
-                df = pd.read_sql_query("SELECT * FROM sales_by_month;", conn)
+                df = pd.read_sql_query("SELECT * FROM analysis_by_month;", conn)
                 Total_orders_by_month(df)
 
             elif choice == 3:
-                df = pd.read_sql_query("SELECT * FROM sales_by_state;", conn)
+                df = pd.read_sql_query("SELECT * FROM analysis_by_state;", conn)
                 Total_orders_by_state(df)
 
             elif choice == 4:
-                df = pd.read_sql_query("SELECT * FROM sales_by_product;", conn)
+                df = pd.read_sql_query("SELECT * FROM analysis_by_product;", conn)
                 Total_orders_by_product(df)
 
             elif choice == 5:
-                df = pd.read_sql_query("SELECT * FROM sales_in_december;", conn)
+                df = pd.read_sql_query("SELECT * FROM analysis_of_december;", conn)
                 Total_orders_in_december(df)
 
             elif choice == 6:
@@ -288,27 +288,28 @@ def main():
             choice = int(input("Enter your choice (2-7): "))
 
             if choice == 1:
-                df = pd.read_sql_query("SELECT * FROM sales_by_city;", conn)
-                sales_by_city(df)
+                df = pd.read_sql_query("SELECT * FROM analysis_by_city;", conn)
+                Total_Orders_by_city(df)
 
             elif choice == 2:
-                df = pd.read_sql_query("SELECT * FROM sales_by_month;", conn)
-                sales_by_month(df)
+                df = pd.read_sql_query("SELECT * FROM analysis_by_month;", conn)
+                Total_orders_by_month(df)
 
             elif choice == 3:
-                df = pd.read_sql_query("SELECT * FROM sales_by_state;", conn)
-                sales_by_state(df)
+                df = pd.read_sql_query("SELECT * FROM analysis_by_state;", conn)
+                Total_orders_by_state(df)
 
             elif choice == 4:
-                df = pd.read_sql_query("SELECT * FROM sales_by_product;", conn)
-                sales_by_product(df)
+                df = pd.read_sql_query("SELECT * FROM analysis_by_product;", conn)
+                Total_orders_by_product(df)
 
             elif choice == 5:
-                df = pd.read_sql_query("SELECT * FROM sales_in_december;", conn)
-                sales_in_december(df)
+                df = pd.read_sql_query("SELECT * FROM analysis_of_december;", conn)
+                Total_orders_in_december(df)
 
             elif choice == 6:
-                sales_dashboard()
+                orders_dashboard()
+
 
         elif choice_1 == 4:
             print("Exiting program...")
