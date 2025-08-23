@@ -135,8 +135,8 @@ JOIN products p ON oi.ProductID = p.ProductID
 JOIN order_customers oc ON o.OrderID = oc.OrderID
 JOIN customers c ON oc.CustomerID = c.CustomerID;
 
--- VIEW 2: Sales by City
-CREATE VIEW sales_by_city AS
+-- VIEW 2: analysis by City
+CREATE VIEW analysis_by_city AS
 SELECT
     c.City,
     SUM(oi.Sales) AS TotalSales,
@@ -148,8 +148,8 @@ JOIN customers c ON oc.CustomerID = c.CustomerID
 GROUP BY c.City
 ORDER BY TotalSales DESC;
 
--- VIEW 3: Sales by Product
-CREATE VIEW sales_by_product AS
+-- VIEW 3: analysis by Product
+CREATE VIEW analysis_by_product AS
 SELECT
     p.ProductName,
     SUM(oi.QuantityOrdered) AS TotalQuantity,
@@ -160,7 +160,7 @@ GROUP BY p.ProductName
 ORDER BY TotalSales DESC;
 
 -- VIEW 4: Sales by State
-CREATE VIEW sales_by_state AS
+CREATE VIEW analysis_by_state AS
 SELECT
     c.State,
     SUM(oi.Sales) AS TotalSales,
@@ -172,7 +172,7 @@ GROUP BY c.State
 ORDER BY TotalSales DESC;
 
 -- VIEW 5: monthly Sales Summary
-CREATE VIEW sales_by_month AS
+CREATE VIEW analysis_by_month AS
 SELECT 
     strftime('%Y', o.OrderDate) AS Year,
     CASE 
@@ -202,8 +202,8 @@ ORDER BY
     Year ASC,
     strftime('%m', o.OrderDate) ASC;
 
--- VIEW 5: sales in december
-CREATE VIEW sales_by_day_december AS
+-- VIEW 5: analysis in december
+CREATE VIEW analysis_of_december AS
 SELECT 
     o.OrderDate AS OrderDate, 
     SUM(oi.Sales) AS TotalSales, 
@@ -218,6 +218,7 @@ GROUP BY
     o.OrderDate
 ORDER BY 
     o.OrderDate;
+
 
 
 
