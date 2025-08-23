@@ -3,24 +3,148 @@
 ## Project Overview
 
 This project involves converting raw sales data into a structured database and creating a dashboard for visualizations.
-The dashboard provides **insights and trends** in the data through interactive visualizations.
+The dashboard provides **insights and trends** in the data.
 
 ## Objectives
 
 * Convert raw CSV sales data into a normalized database.
 * Build relational tables for **Orders, Products, Customers, and Sales**.
 * Create **views** for business insights.
-* Enable **data visualization dashboards** in Tableau / Power BI / Python.
+* Enable **data visualization dashboards** in Python.
 
 ## Technologies Used
 
-* **Database**: SQLite / PostgreSQL / MySQL
-* **Visualization**: Tableau, Power BI, or D3.js
+* **Database**: SQLite 
+* **Visualization**: seaborn, matplotlib.pyplot, matplotlib.gridspec
 * **Languages**: Python, SQL
 
 ---
 
+## 🚀 How to Run the Program
+
+Follow these steps to run the reporting and visualization tool:
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/your-username/your-repo-name.git
+   cd your-repo-name
+   ```
+
+2. **Install dependencies**
+   Make sure you have Python 3 installed and `pandas`, `matplotlib`, `sqlite3` — sqlite3 is built into Python)*
+
+3. **Prepare the database**
+   Place your `sales.db` file in the project root directory.
+   The program expects pre-computed views/tables like:
+
+   * `order_details`
+   * `analysis_by_city`
+   * `analysis_by_month`
+   * `analysis_by_state`
+   * `analysis_of_product`
+   * `anakysis_og_december`
+
+4. **Run the program**
+
+   ```bash
+   python main.py
+   ```
+
+5. **Choose a report**
+
+   * **Order Reports** → plots and dashboards based on total orders
+   * **Sales Reports** → plots and dashboards based on total sales
+
+6. **View results**
+
+   * Plots will be displayed interactively.
+   * They are also **saved as PNG files** in the same directory for later use (see [Dashboards & Plots](#-dashboards--plots)).
+
+---
+
 ## 📂 Database Schema & Sample Data
+
+```sql
+-- ========================== Database Schema ==========================
+CREATE TABLE orders (
+    OrderID       INTEGER PRIMARY KEY,
+    OrderDate     TEXT,
+    time          TEXT,
+    Hour          INTEGER
+);
+
+CREATE TABLE products (
+    ProductID     INTEGER PRIMARY KEY AUTOINCREMENT,
+    ProductName   TEXT UNIQUE,
+    PriceEach     REAL
+);
+
+CREATE TABLE customers (
+    CustomerID       INTEGER PRIMARY KEY AUTOINCREMENT,
+    PurchaseAddress  TEXT,
+    City             TEXT,
+    State            TEXT,
+    ZIP              INTEGER
+);
+
+CREATE TABLE order_items (
+    ItemID          INTEGER PRIMARY KEY AUTOINCREMENT,
+    OrderID         INTEGER,
+    ProductID       INTEGER,
+    QuantityOrdered INTEGER,
+    Sales           REAL, -- QuantityOrdered * PriceEach
+    FOREIGN KEY(OrderID)  REFERENCES orders(OrderID),
+    FOREIGN KEY(ProductID) REFERENCES products(ProductID)
+);
+
+CREATE TABLE order_customers (
+    OrderID     INTEGER,
+    CustomerID  INTEGER,
+    PRIMARY KEY (OrderID, CustomerID),
+    FOREIGN KEY(OrderID)   REFERENCES orders(OrderID),
+    FOREIGN KEY(CustomerID) REFERENCES customers(CustomerID)
+);
+
+-- ========================== Views ==========================
+CREATE VIEW order_details AS
+SELECT o.OrderID, o.OrderDate, o.time, o.Hour,
+       p.ProductName, p.PriceEach,
+       oi.QuantityOrdered, oi.Sales,
+       c.CustomerID, c.PurchaseAddress, c.City, c.State, c.ZIP
+FROM order_items oi
+JOIN orders o ON oi.OrderID = o.OrderID
+JOIN products p ON oi.ProductID = p.ProductID
+JOIN order_customers oc ON o.OrderID = oc.OrderID
+JOIN customers c ON oc.CustomerID = c.CustomerID;
+
+CREATE VIEW sales_by_city AS
+SELECT City, SUM(Sales) AS TotalSales, COUNT(DISTINCT OrderID) AS TotalOrders
+FROM order_details
+GROUP BY City;
+
+CREATE VIEW sales_by_product AS
+SELECT ProductName, SUM(Sales) AS TotalSales, SUM(QuantityOrdered) AS TotalQuantity
+FROM order_details
+GROUP BY ProductName;
+
+CREATE VIEW sales_by_hour AS
+SELECT OrderDate, Hour, SUM(Sales) AS TotalSales, COUNT(DISTINCT OrderID) AS TotalOrders
+FROM order_details
+GROUP BY OrderDate, Hour;
+
+CREATE VIEW sales_by_state AS
+SELECT State, SUM(Sales) AS TotalSales, COUNT(DISTINCT OrderID) AS TotalOrders
+FROM order_details
+GROUP BY State;
+
+CREATE VIEW sales_by_day AS
+SELECT OrderDate, SUM(Sales) AS TotalSales, COUNT(DISTINCT OrderID) AS TotalOrders
+FROM order_details
+GROUP BY OrderDate;
+```
+
+---
 
 ### 🛒 Sales_Data.csv (Raw Data Sample)
 
@@ -151,19 +275,9 @@ The dashboard provides **insights and trends** in the data through interactive v
 | ThinkPad Laptop        | 4130          | 4129958.7  |
 | Google Phone           | 5532          | 3319200    |
 | 27in 4K Gaming Monitor | 6244          | 2435097.56 |
-
----
-Perfect 👌 you’ve built **two dashboards + individual plot functions** for **Sales** and **Orders**.
-For your README, you’ll want clear **headings** and **links to the saved PNGs** (which you already save in the functions).
-
-Here’s how you can document them in `README.md`:
-
 ---
 
 # 📊 Dashboards & Plots
-
-This project generates **visualizations** of sales and orders data from the `sales.db` database.
-All plots are automatically saved as `.png` files for easy reference and sharing.
 
 ---
 
@@ -172,42 +286,42 @@ All plots are automatically saved as `.png` files for easy reference and sharing
 ### 🔹 Sales Dashboard
 
 Combines all major sales plots (city, month, state, product, December).
-📷 ![Sales Dashboard](dashboard.png)
+ ![Sales Dashboard](dashboard.png)
 
 ---
 
 ### 🔹 Sales by City
 
 Shows total sales aggregated by city.
-📷 ![Sales by City](sales_by_city.png)
+ ![Sales by City](sales_by_city.png)
 
 ---
 
 ### 🔹 Sales by Month
 
 Shows monthly sales trends across years.
-📷 ![Sales by Month](sales_by_month.png)
+ ![Sales by Month](sales_by_month.png)
 
 ---
 
 ### 🔹 Sales by Product
 
 Top products ranked by sales.
-📷 ![Sales by Product](sales_by_product.png)
+![Sales by Product](sales_by_product.png)
 
 ---
 
 ### 🔹 Sales by State
 
 Total sales distribution across states.
-📷 ![Sales by State](sales_by_state.png)
+![Sales by State](sales_by_state.png)
 
 ---
 
 ### 🔹 Sales in December
 
 Daily sales trend in December.
-📷 ![Sales in December](sales_in_December.png)
+![Sales in December](sales_in_December.png)
 
 ---
 
@@ -216,44 +330,41 @@ Daily sales trend in December.
 ### 🔹 Orders Dashboard
 
 Combines all major order plots (city, month, state, product, December).
-📷 ![Orders Dashboard](Orders_dashboard.png)
+![Orders Dashboard](Orders_dashboard.png)
 
 ---
 
 ### 🔹 Orders by City
 
 Shows total orders aggregated by city.
-📷 ![Orders by City](Orders_by_city.png)
+![Orders by City](Orders_by_city.png)
 
 ---
 
 ### 🔹 Orders by Month
 
 Shows monthly order trends across years.
-📷 ![Orders by Month](Orders_by_month.png)
+![Orders by Month](Orders_by_month.png)
 
 ---
 
 ### 🔹 Orders by Product
 
 Top products ranked by total quantity ordered.
-📷 ![Orders by Product](Orders_by_product.png)
+![Orders by Product](Orders_by_product.png)
 
 ---
 
 ### 🔹 Orders by State
 
 Total orders distribution across states.
-📷 ![Orders by State](Orders_by_state.png)
+![Orders by State](Orders_by_state.png)
 
 ---
 
 ### 🔹 Orders in December
 
 Daily orders trend in December.
-📷 ![Orders in December](Orders_in_december.png)
+![Orders in December](Orders_in_december.png)
 
 ---
-
-
-
