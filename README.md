@@ -108,7 +108,7 @@ The dashboard provides **insights and trends** in the data through interactive v
 
 ---
 
-### 🌆 sales_by_city
+### 🌆 analysis_by_city
 
 | City          | TotalSales | TotalOrders |
 | ------------- | ---------- | ----------- |
@@ -119,19 +119,7 @@ The dashboard provides **insights and trends** in the data through interactive v
 
 ---
 
-### 📅 sales_by_day
-
-| OrderDate  | TotalSales | TotalOrders |
-| ---------- | ---------- | ----------- |
-| 2019-01-01 | 65681.94   | 287         |
-| 2019-01-02 | 70813.20   | 308         |
-| 2019-01-03 | 47046.20   | 286         |
-| 2019-01-04 | 62012.21   | 282         |
-| 2019-01-05 | 46524.63   | 301         |
-
----
-
-### 🏛️ sales_by_month
+### 🏛️ analysis_by_month
 
 | Year | Month | TotalSales | TotalOrders |
 |------|-------|------------|-------------|
@@ -141,10 +129,9 @@ The dashboard provides **insights and trends** in the data through interactive v
 | 2019 | December | 4610626.83 | 23975 |
 | 2020 | January | 8670.29 | 31 |
 
-
 ---
 
-### ⏰ sales_in_december
+### ⏰ analysis_of_december
 
 | Day_Of_Month | TotalQuantity | TotalSales |
 |--------------|----------------|------------|
@@ -155,7 +142,7 @@ The dashboard provides **insights and trends** in the data through interactive v
 | 05           | 778            | 155079.3   |
 ---
 
-### 📦 sales_by_product
+### 📦 analysis_of_product
 
 | ProductName            | TotalQuantity | TotalSales |
 | ---------------------- | ------------- | ---------- |
