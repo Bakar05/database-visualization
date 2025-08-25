@@ -106,42 +106,6 @@ CREATE TABLE order_customers (
     FOREIGN KEY(CustomerID) REFERENCES customers(CustomerID)
 );
 
--- ========================== Views ==========================
-CREATE VIEW order_details AS
-SELECT o.OrderID, o.OrderDate, o.time, o.Hour,
-       p.ProductName, p.PriceEach,
-       oi.QuantityOrdered, oi.Sales,
-       c.CustomerID, c.PurchaseAddress, c.City, c.State, c.ZIP
-FROM order_items oi
-JOIN orders o ON oi.OrderID = o.OrderID
-JOIN products p ON oi.ProductID = p.ProductID
-JOIN order_customers oc ON o.OrderID = oc.OrderID
-JOIN customers c ON oc.CustomerID = c.CustomerID;
-
-CREATE VIEW sales_by_city AS
-SELECT City, SUM(Sales) AS TotalSales, COUNT(DISTINCT OrderID) AS TotalOrders
-FROM order_details
-GROUP BY City;
-
-CREATE VIEW sales_by_product AS
-SELECT ProductName, SUM(Sales) AS TotalSales, SUM(QuantityOrdered) AS TotalQuantity
-FROM order_details
-GROUP BY ProductName;
-
-CREATE VIEW sales_by_hour AS
-SELECT OrderDate, Hour, SUM(Sales) AS TotalSales, COUNT(DISTINCT OrderID) AS TotalOrders
-FROM order_details
-GROUP BY OrderDate, Hour;
-
-CREATE VIEW sales_by_state AS
-SELECT State, SUM(Sales) AS TotalSales, COUNT(DISTINCT OrderID) AS TotalOrders
-FROM order_details
-GROUP BY State;
-
-CREATE VIEW sales_by_day AS
-SELECT OrderDate, SUM(Sales) AS TotalSales, COUNT(DISTINCT OrderID) AS TotalOrders
-FROM order_details
-GROUP BY OrderDate;
 ```
 
 ---
