@@ -250,42 +250,42 @@ CREATE TABLE order_customers (
 ### 🔹 Sales Dashboard
 
 Combines all major sales plots (city, month, state, product, December).
- ![Sales Dashboard](dashboard.png)
+ ![Sales Dashboard](pngs/dashboard.png)
 
 ---
 
 ### 🔹 Sales by City
 
 Shows total sales aggregated by city.
- ![Sales by City](sales_by_city.png)
+ ![Sales by City](pngs/sales_by_city.png)
 
 ---
 
 ### 🔹 Sales by Month
 
 Shows monthly sales trends across years.
- ![Sales by Month](sales_by_month.png)
+ ![Sales by Month](pngs/sales_by_month.png)
 
 ---
 
 ### 🔹 Sales by Product
 
 Top products ranked by sales.
-![Sales by Product](sales_by_product.png)
+![Sales by Product](pngs/sales_by_product.png)
 
 ---
 
 ### 🔹 Sales by State
 
 Total sales distribution across states.
-![Sales by State](sales_by_state.png)
+![Sales by State](pngs/sales_by_state.png)
 
 ---
 
 ### 🔹 Sales in December
 
 Daily sales trend in December.
-![Sales in December](sales_in_December.png)
+![Sales in December](pngs/sales_in_December.png)
 
 ---
 
@@ -294,41 +294,41 @@ Daily sales trend in December.
 ### 🔹 Orders Dashboard
 
 Combines all major order plots (city, month, state, product, December).
-![Orders Dashboard](Orders_dashboard.png)
+![Orders Dashboard](pngs/Orders_dashboard.png)
 
 ---
 
 ### 🔹 Orders by City
 
 Shows total orders aggregated by city.
-![Orders by City](Orders_by_city.png)
+![Orders by City](pngs/Orders_by_city.png)
 
 ---
 
 ### 🔹 Orders by Month
 
 Shows monthly order trends across years.
-![Orders by Month](Orders_by_month.png)
+![Orders by Month](pngs/Orders_by_month.png)
 
 ---
 
 ### 🔹 Orders by Product
 
 Top products ranked by total quantity ordered.
-![Orders by Product](Orders_by_product.png)
+![Orders by Product](pngs/Orders_by_product.png)
 
 ---
 
 ### 🔹 Orders by State
 
 Total orders distribution across states.
-![Orders by State](Orders_by_state.png)
+![Orders by State](pngs/Orders_by_state.png)
 
 ---
 
 ### 🔹 Orders in December
 
 Daily orders trend in December.
-![Orders in December](Orders_in_december.png)
+![Orders in December](pngs/Orders_in_december.png)
 
 ---
